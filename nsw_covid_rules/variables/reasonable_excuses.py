@@ -1,9 +1,4 @@
-from openfisca_core.variables import Variable
-from openfisca_core.periods import ETERNITY
 from openfisca_core.indexed_enums import Enum
-from openfisca_nsw_base.entities import Building
-
-import numpy as np
 
 # Reasonble excuses as detailed in Schedule 2 of the PHO.
 
@@ -15,7 +10,7 @@ class ReasonableExcuses(Enum):
     pick_up_from_childcare = 'Person can leave place of residence to pick up' \
                              ' a person from childcare.'
     drop_off_from_childcare = 'Person can leave place of residence to drop off' \
-                             ' a person to childcare.'
+                              ' a person to childcare.'
     attending_school_or_education = 'Person can leave place of residence to attend' \
                                     ' school or another educational institution,' \
                                     ' if they cannot reasonably learn from the' \
@@ -24,7 +19,7 @@ class ReasonableExcuses(Enum):
                              ' medical care, including obtaining a ' \
                              ' COVID-19 test or vaccination.'
     obtaining_medical_supplies = 'Person can leave place of residence to obtain' \
-                             ' medical or health supplies.'
+                                 ' medical or health supplies.'
     donating_blood = 'Person can leave place of residence to donate blood.'
     provide_care = 'Person can leave place of residence to provide care or' \
                    ' assistance to a vulnerable person, or to fulfll carer\'s responsibilities.'
