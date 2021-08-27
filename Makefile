@@ -40,5 +40,5 @@ test: build check-syntax-errors check-style
 	#python -m pip install ../openfisca_nsw_base/
 	python -m pip install openfisca_nsw_base
 	pip install -e .
-	openfisca test $EXT_NAME/tests --country-package openfisca_nsw_base --extensions $EXT_NAME
+	openfisca test nsw_covid_rules/tests --country-package openfisca_nsw_base --extensions nsw_covid_rules
 
