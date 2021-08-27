@@ -1,0 +1,62 @@
+square_meters_per_person_in_general_area:
+    description: The minimum allowable area for a single person within a general premises.
+    values:
+      2021-01-01:
+        value: 4
+
+
+maximum_people_in_short_term_residence:
+    description: The maximum allowable number of people who can occupy a holiday home
+          or short term rental.
+    values:
+      2021-01-01:
+        value: 5
+        # is this parameter name clear enough?
+
+
+maximum_people_in_place_of_residence:
+    description: The maximum allowable number of people who can occupy a place
+        of residence, per adult living at the residence, at any one time.
+    values:
+      2021-01-01:
+        value: 5
+
+
+square_meters_per_person_in_entertainment:
+    description: The minimum allowable area for a single person within
+                  an entertainment or major recreation area.
+    values:
+      2021-01-01:
+        value: 4
+
+
+maximum_people_in_gym_class:
+    description: The maximum allowable number of people who can occupy a gym class
+       at any one time.
+    values:
+      2021-01-01:
+        value: 20
+
+
+maximum_people_in_group_dance_class:
+    description: The maximum allowable number of people who can occupy a group dance class
+       at any one time.
+    values:
+      2021-01-01:
+        value: 20
+
+
+square_meters_per_person_in_stay_at_home_area:
+    description: The minimum allowable area for a single person within a general premises
+      in a stay at home area.
+    values:
+      2021-01-01:
+        value: 4
+
+
+square_meters_per_person_in_area_of_concern:
+    description: The minimum allowable area (in m2) for a single person within a general premises
+      in an area of concern.
+    values:
+      2021-01-01:
+        value: 4

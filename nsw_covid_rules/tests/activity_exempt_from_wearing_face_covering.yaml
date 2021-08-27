@@ -1,0 +1,16 @@
+- name: test face covering - person has to wear facemask (general area - is not
+    conducting activity that would make them exempt)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    current_exempt_activity: is_not_exempt
+  output:
+    person_is_conducting_exempt_activity: False
+- name: test face covering - person does not have to wear facemask (general
+    area - is not conducting activity that would make them exempt)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    current_exempt_activity: is_student_at_school
+  output:
+    person_is_conducting_exempt_activity: True

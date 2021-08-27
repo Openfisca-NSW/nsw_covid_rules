@@ -1,0 +1,110 @@
+- name: test LGA lookup - Surry Hills is in City of Sydney LGA
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_suburb_of_residence: "Surry Hills"
+  output:
+    person_LGA_of_residence: city_of_sydney
+- name: test area classification - Surry Hills is in stay at home area
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_suburb_of_residence: "Surry Hills"
+  output:
+    person_LGA_of_residence: city_of_sydney
+    person_category_of_area: stay_at_home_area
+- name: test area classification - person is in area of concern (is in Bayside Council LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: bayside_council
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Blacktown LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: city_of_blacktown
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Burwood LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: burwood
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Campbelltown LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: city_of_campbelltown
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Canterbury-Bankstown LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: canterbury_bankstown
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Cumberland LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: cumberland
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Fairfield LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: city_of_fairfield
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Georges River LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: georges_river
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Liverpool LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: city_of_liverpool
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Parramatta LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: city_of_parramatta
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in area of concern (is in Strathfield LGA)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_LGA_of_residence: strathfield
+  output:
+    person_category_of_area: area_of_concern
+- name: test area classification - person is in stay at home area (is in Penrith LGA,
+    but is not in affected suburb)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_suburb_of_residence: "Regentville"
+    person_LGA_of_residence: city_of_penrith
+  output:
+    person_category_of_area: stay_at_home_area
+- name: test area classification - person is in area of concern (is in Penrith LGA,
+    and is in affected suburb)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_suburb_of_residence: "Colyson"
+    person_LGA_of_residence: city_of_penrith
+  output:
+    person_category_of_area: area_of_concern

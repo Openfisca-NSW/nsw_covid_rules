@@ -1,0 +1,32 @@
+- name: test maximum number of people on premises in general area (premises is 75m2 in size)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    size_of_premises: 75
+    type_of_premises: general_premises
+  output:
+    maximum_number_of_persons_general_area: 25
+- name: test maximum number of people on premises in general area. (premises is 500m2 in size)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    size_of_premises: 500
+    type_of_premises: general_premises
+  output:
+    maximum_number_of_persons_general_area: 125
+- name: test maximum number of people in residence in general area (premises is 75m2 in size)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    size_of_premises: 75
+    type_of_premises: place_of_residence
+  output:
+    maximum_number_of_persons_general_area: 5
+- name: test maximum number of people in residence in general area. (premises is 500m2 in size)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    size_of_premises: 500
+    type_of_premises: place_of_residence
+  output:
+    maximum_number_of_persons_general_area: 5

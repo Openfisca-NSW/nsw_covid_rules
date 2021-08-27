@@ -1,0 +1,51 @@
+- name: test face covering - person does not have to wear facemask (general area)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_is_over_12_years_of_age: False
+    person_is_in_non_residential_indoor_area: False
+    person_is_in_public_transport_waiting_area: False
+    person_is_in_public_transport_vehicle: False
+    person_is_in_major_recreation_facility: False
+    person_is_attending_COVID_19_safe_outdoor_gathering: False
+    person_is_attending_controlled_outdoor_gathering: False
+    person_is_working_at_hospitality_venue_and_dealing_with_public: False
+  output:
+    NSW_COVID_19_must_wear_face_covering_general_area: False
+- name: test face covering - person has to wear facemask (general area, is in
+    non-residential indoor area and over 12yo)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_is_over_12_years_of_age: True
+    person_is_in_non_residential_indoor_area: True
+    person_is_in_public_transport_waiting_area: False
+    person_is_in_public_transport_vehicle: False
+    person_is_in_major_recreation_facility: False
+    person_is_attending_COVID_19_safe_outdoor_gathering: False
+    person_is_attending_controlled_outdoor_gathering: False
+    person_is_working_at_hospitality_venue_and_dealing_with_public: False
+  output:
+    NSW_COVID_19_must_wear_face_covering_general_area: True
+- name: test face covering - person does not have to wear facemask (stay at home area)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_is_over_12_years_of_age: False
+    person_is_in_non_residential_indoor_area: False
+    person_is_in_residential_common_area: False
+    person_is_in_public_transport_waiting_area: False
+    person_is_in_public_transport_vehicle: False
+  output:
+    NSW_COVID_19_must_wear_face_covering_stay_at_home_area: False
+- name: test face covering - person does not have to wear facemask (area of concern)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    person_is_over_12_years_of_age: False
+    person_is_in_non_residential_indoor_area: False
+    person_is_in_residential_common_area: False
+    person_is_in_public_transport_waiting_area: False
+    person_is_in_public_transport_vehicle: False
+  output:
+    NSW_COVID_19_must_wear_face_covering_area_of_concern: False
