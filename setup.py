@@ -2,10 +2,10 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="$EXT_NAME",
+    name="nsw_covid_rules",
     version="0.0.1",
     author="Department of Customer Service - NSW Government",
-    author_email = 'sara.falamaki@customerservice.nsw.gov.au',
+    author_email = 'asghar.kazi@customerservice.nsw.gov.au',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: GNU Affero General Public License v3",
@@ -16,14 +16,13 @@ setup(
     description="An OpenFisca extension that adds some variables to an already-existing tax and benefit system",
     keywords = 'benefit microsimulation social tax',
     license="http://www.fsf.org/licensing/licenses/agpl-3.0.html",
-    url = "https://github.com/Openfisca-NSW/$EXT_NAME",
+    url = "https://github.com/Openfisca-NSW/nsw_covid_rules",
     include_package_data = True,  # Will read MANIFEST.in
     data_files = [
-        ("share/openfisca/$EXT_NAME", ["CHANGELOG.md", "LICENSE", "README.md"]),
+        ("share/openfisca/nsw_covid_rules", ["CHANGELOG.md", "LICENSE", "README.md"]),
         ],
     install_requires = [
         'OpenFisca_nsw_base'
-
         ],
     extras_require = {
         "dev": [
