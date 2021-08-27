@@ -1,1 +1,1 @@
-recursive-include $EXT_NAME *
+recursive-include nsw_covid_rules *
