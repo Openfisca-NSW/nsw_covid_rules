@@ -1,0 +1,8 @@
+- name: Nominated person meets all conditions for permit
+  period: 2021
+  input:
+    noPersonNominated: True
+    notNomatedForAnotherPerson: True
+    livingWithinFiveKm: True
+  output:
+    is_eligible_to_be_nominated_person: True
