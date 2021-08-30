@@ -1,31 +1,24 @@
-# $EXT_NAME 
+# nsw_covid_rules
 
-This is a template for making extensions in NSW.
+This repository contains COVID related rules for NSW, as described in the Public Health Orders (PHO).
 
-## Initialising 
-
-You'll need to rename the openfisca_nsw_extension_template directory to the name
-of your extension. Also edit README.md, MANIFEST.in, setup.py & Makefile, and replace $EXT_NAME with the 
-name of your extension. Replace $SHORT_NAME with a shortened name for it, for example
-openfisca-nsw-rules-kids-vouchers is shortened to "kids". This just makes it easier to
-switch to the virtual env.
-
+PHO coded in this repo can be found at: https://www.legislation.nsw.gov.au/file/Public%20Health%20(COVID-19%20Additional%20Restrictions%20for%20Delta%20Outbreak)%20Order%20(No%202)%202021_210829.pdf
 
 ## Installing
 
-> We recommend that you use a virtualevn to install OpenFisca. If you don't, 
+> We recommend that you use a virtualenv to install OpenFisca. If you don't,
 you may need to add `--user` at the end of all commands starting by `pip`.
 
 ```sh
-python3 -m venv $SHORT_NAME
+python3 -m venv covid
 deactive
-source $SHORT_NAME/bin/activate
+source covid/bin/activate
 
 ```
 To install your extension, run:
 
 ```sh
-make install 
+make install
 ```
 
 ## Testing
@@ -33,7 +26,7 @@ make install
 You can make sure that everything is working by running the provided tests:
 
 ```sh
-make test 
+make test
 ```
 
 To add your extension to the NSW API, update the openfisca-nsw-API repo's makefile with your
