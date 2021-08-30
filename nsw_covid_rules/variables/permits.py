@@ -10,7 +10,6 @@ from openfisca_core.variables import Variable
 
 
 class PermitReasonsGreaterSydney(Enum):
-    leaving_Greater_Sydney = 'Person is leaving Greater Sydney.'
     relocating_new_place_of_residence = 'Person is relocating to a new place' \
                                         'of residence outside Greater Sydney.'  # 5.4(1)(a)(i)
     move_between_place_of_residence_for_work = 'Person moves between places of' \
@@ -69,7 +68,7 @@ class notNomatedForAnotherPerson(Variable):
 
 
 class livingWithinFiveKm(Variable):
-    value_type = int
+    value_type = bool
     entity = Person
     definition_period = DAY
     label = 'Nominated individual resides within 5km of the place of residence'
