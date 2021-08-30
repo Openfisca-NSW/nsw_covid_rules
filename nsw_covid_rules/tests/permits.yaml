@@ -1,5 +1,5 @@
 - name: Nominated person meets all conditions for permit
-  period: 2021
+  period: 2021-09-01
   input:
     noPersonNominated: True
     notNomatedForAnotherPerson: True

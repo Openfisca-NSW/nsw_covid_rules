@@ -47,9 +47,9 @@ class is_eligible_to_be_nominated_person(Variable):
 
     def formula(persons, period, parameters):
         return (
-            person('noPersonNominated', period)
-            and person('notNomatedForAnotherPerson', period)
-            and person('livingWithinFiveKm', period)
+            persons('noPersonNominated', period)
+            and persons('notNomatedForAnotherPerson', period)
+            and persons('livingWithinFiveKm', period)
             )
 
 
