@@ -6,3 +6,126 @@
     livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: True
+- name: Nominated person is not eligible to be nominated as a visitor - person
+    already has another visitor
+  period: 2021-09-01
+  input:
+    noPersonNominated: False
+    notNomatedForAnotherPerson: True
+    livingWithinFiveKm: True
+  output:
+    is_eligible_to_be_nominated_person: False
+- name: Nominated person is not eligible to be nominated as a visitor - person
+    already is nominated as a visitor for another person
+  period: 2021-09-01
+  input:
+    noPersonNominated: True
+    notNomatedForAnotherPerson: False
+    livingWithinFiveKm: True
+  output:
+    is_eligible_to_be_nominated_person: False
+- name: Nominated person is not eligible to be nominated as a visitor - person
+    does not live within 5 kilometres
+  period: 2021-09-01
+  input:
+    noPersonNominated: True
+    notNomatedForAnotherPerson: True
+    livingWithinFiveKm: False
+  output:
+    is_eligible_to_be_nominated_person: False
+- name: Person does not require a permit to go to work - they are in the area of concern,
+    they are an authorised worker, they are not leaving the area of concern and they are
+    not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: area_of_concern
+    is_authorised_worker: True
+    is_leaving_area_of_concern: False
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: False
+- name: Person does not require a permit to go to work - they are in the area of concern,
+    they are an authorised worker, they are leaving the area of concern and they are
+    provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: area_of_concern
+    is_authorised_worker: True
+    is_leaving_area_of_concern: True
+    is_providing_emergency_services: True
+  output:
+    person_requires_permit_for_work: False
+- name: Person does not require a permit to go to work - they are in the area of concern,
+    they are not an authorised worker, they are not leaving the area of concern and they are
+    not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: area_of_concern
+    is_authorised_worker: False
+    is_leaving_area_of_concern: False
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: False
+- name: Person does require a permit to go to work - they are in the area of concern,
+    they are an authorised worker, they are leaving the area of concern and they are
+    not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: area_of_concern
+    is_authorised_worker: True
+    is_leaving_area_of_concern: True
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: True
+- name: Person does require a permit to go to work - they are in the area of concern,
+    they are an authorised worker, they are leaving the area of concern and they are
+    not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: area_of_concern
+    is_authorised_worker: True
+    is_leaving_area_of_concern: True
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: True
+- name: Person does require a permit to go to work - they are in the stay at home area,
+    they are entering the area of concern and they are not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: stay_at_home_area
+    is_entering_area_of_concern: True
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: True
+- name: Person does not require a permit to go to work - they are in the stay at home area,
+    they are entering the area of concern and they are provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: stay_at_home_area
+    is_entering_area_of_concern: True
+    is_providing_emergency_services: True
+  output:
+    person_requires_permit_for_work: False
+- name: Person does not require a permit to go to work - they are in the stay at home area,
+    they are not entering the area of concern and they are not provisioning emergency services
+  period: 2021-09-01
+  input:
+    person_category_of_area: stay_at_home_area
+    is_entering_area_of_concern: False
+    is_providing_emergency_services: False
+  output:
+    person_requires_permit_for_work: False
+- name: Person is allowed to leave Greater Sydney - moving between places of
+    residence for work. Person requires a permit to leave Greater Sydney.
+  period: 2021-09-01
+  input:
+    greater_sydney_permit_reasons: move_between_place_of_residence_for_work
+  output:
+    person_requires_permit_to_leave_Greater_Sydney: True
+- name: Person is allowed to leave Greater Sydney - moving between places of
+    residence for work. Person requires a permit to leave Greater Sydney.
+  period: 2021-09-01
+  input:
+    greater_sydney_permit_reasons: carrying_out_work_less_than_50kms_from_Sydney
+  output:
+    person_requires_permit_to_leave_Greater_Sydney: False
