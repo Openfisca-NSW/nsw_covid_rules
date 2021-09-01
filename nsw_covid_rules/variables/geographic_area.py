@@ -74,7 +74,7 @@ class CategoryOfArea(Enum):
     area_of_concern = 'Person is in an area of concern.'
 
 
-class person_category_of_area(Variable):
+class category_of_area(Variable):
     value_type = Enum
     possible_values = CategoryOfArea
     default_value = CategoryOfArea.general_area

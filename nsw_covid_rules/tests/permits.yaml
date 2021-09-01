@@ -38,7 +38,7 @@
     not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: area_of_concern
+    category_of_area: area_of_concern
     is_authorised_worker: True
     is_leaving_area_of_concern: False
     is_providing_emergency_services: False
@@ -49,7 +49,7 @@
     provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: area_of_concern
+    category_of_area: area_of_concern
     is_authorised_worker: True
     is_leaving_area_of_concern: True
     is_providing_emergency_services: True
@@ -60,7 +60,7 @@
     not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: area_of_concern
+    category_of_area: area_of_concern
     is_authorised_worker: False
     is_leaving_area_of_concern: False
     is_providing_emergency_services: False
@@ -71,7 +71,7 @@
     not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: area_of_concern
+    category_of_area: area_of_concern
     is_authorised_worker: True
     is_leaving_area_of_concern: True
     is_providing_emergency_services: False
@@ -82,7 +82,7 @@
     not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: area_of_concern
+    category_of_area: area_of_concern
     is_authorised_worker: True
     is_leaving_area_of_concern: True
     is_providing_emergency_services: False
@@ -92,7 +92,7 @@
     they are entering the area of concern and they are not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: stay_at_home_area
+    category_of_area: stay_at_home_area
     is_entering_area_of_concern: True
     is_providing_emergency_services: False
   output:
@@ -101,7 +101,7 @@
     they are entering the area of concern and they are provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: stay_at_home_area
+    category_of_area: stay_at_home_area
     is_entering_area_of_concern: True
     is_providing_emergency_services: True
   output:
@@ -110,7 +110,7 @@
     they are not entering the area of concern and they are not provisioning emergency services
   period: 2021-09-01
   input:
-    person_category_of_area: stay_at_home_area
+    category_of_area: stay_at_home_area
     is_entering_area_of_concern: False
     is_providing_emergency_services: False
   output:

@@ -21,7 +21,7 @@ class person_requires_permit_for_work(Variable):
     label = 'Is the person required to acquire a permit from Service NSW to go to work?'
 
     def formula(persons, period, parameters):
-        category_of_area = persons('person_category_of_area', period)
+        category_of_area = persons('category_of_area', period)
         CategoryOfArea = (category_of_area.possible_values)
         in_area_of_concern = (category_of_area == CategoryOfArea.area_of_concern)
         is_authorised_worker = persons('is_authorised_worker', period)
