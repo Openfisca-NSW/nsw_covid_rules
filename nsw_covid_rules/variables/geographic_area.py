@@ -53,8 +53,8 @@ class person_LGA_of_residence(Variable):
     definition_period = ETERNITY
     label = 'What suburb is the person in?'
 
-    def formula(buildings, period, parameters):
-        suburb = buildings('person_suburb_of_residence', period)
+    def formula(personss, period, parameters):
+        suburb = personss('person_suburb_of_residence', period)
         return np.select([
                          suburb == "Blacktown",
                          suburb == "Enmore",
@@ -82,9 +82,9 @@ class category_of_area(Variable):
     definition_period = ETERNITY
     label = 'What suburb is the person in?'
 
-    def formula(buildings, period, parameters):
-        suburb = buildings('person_suburb_of_residence', period)
-        LGA = buildings('person_LGA_of_residence', period)
+    def formula(personss, period, parameters):
+        suburb = personss('person_suburb_of_residence', period)
+        LGA = personss('person_LGA_of_residence', period)
         is_in_area_of_concern = ((LGA == LGAResidence.bayside_council)
                                  + (LGA == LGAResidence.city_of_blacktown)
                                  + (LGA == LGAResidence.burwood)

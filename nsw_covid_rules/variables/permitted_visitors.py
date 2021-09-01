@@ -8,7 +8,7 @@ class is_prescribed_work(Variable):
     entity = Person
     definition_period = ETERNITY
     label = 'Is the work relating to (a) cleaning, (b) repairs and maintenance'\
-            '(c) alterations and additions to buildings'\
+            '(c) alterations and additions to personss'\
             '(d) work carried out as part of a trade, including electrical'\
             'work or plumbing'
 

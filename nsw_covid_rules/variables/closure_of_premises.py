@@ -13,8 +13,8 @@ class premises_must_be_closed(Variable):
     definition_period = ETERNITY
     label = 'Are your premises required to be closed?'
 
-    def formula(buildings, period, parameters):
-        type_of_premises = buildings('type_of_premises', period)
+    def formula(persons, period, parameters):
+        type_of_premises = persons('type_of_premises', period)
         TypeOfPremises = type_of_premises.possible_values
         is_amusement_centre = (type_of_premises == TypeOfPremises.amusement_centre)
         is_hairdresser = (type_of_premises == TypeOfPremises.hairdresser)
