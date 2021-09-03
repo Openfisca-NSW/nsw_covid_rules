@@ -14,9 +14,11 @@ class visitors_permitted(Variable):
         AREA = Area.possible_values
         return select(
             [(AREA.area_of_concern),
-            (AREA.stay_at_home_area)],
+            (AREA.stay_at_home_area),
+            (AREA.general_area)],
             [persons('visitors_permitted_for_area_of_concern', period),
-            persons('visitors_permitted_for_stay_at_home_area', period)])
+            persons('visitors_permitted_for_stay_at_home_area', period),
+            persons('visitors_permitted_for_general_area', period)])
 
 
 class visitors_permitted_for_area_of_concern(Variable):
@@ -27,12 +29,34 @@ class visitors_permitted_for_area_of_concern(Variable):
             'at home area'
 
 
+class visitors_permitted_for_general_area(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person is authorised to visit a place of residence in a general'\
+            'area'
+
+
 class visitors_permitted_for_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
     label = 'Is  person is authorised to visit a place of residence in an area'\
             'of concern?'
+
+    def formula(persons, period, parameters):
+        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
+        visiting_for_childcare = persons('visiting_for_childcare', period)
+        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
+        visiting_for_emergency = persons('visiting_for_emergency', period)
+        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
+        is_nominated_person = persons('is_nominated_person', period)
+        return (visiting_for_move_assistance + visiting_for_childcare
+        + visiting_for_family_contact_arrangements + visiting_for_emergency
+        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
+        + visiting_for_carer_responsibilities + is_nominated_person)
 
 
 class is_prescribed_work(Variable):
