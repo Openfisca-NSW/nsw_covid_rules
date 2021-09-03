@@ -1,9 +1,7 @@
-from openfisca_core.indexed_enums import Enum
 from openfisca_core.model_api import *
 from openfisca_nsw_base.entities import *
 from openfisca_core.variables import Variable
-from nsw_covid_rules.variables.geographic_area import CategoryOfArea
-import numpy as np
+from nsw_covid_rules.variables.geographic_area import CategoryOfArea as Area
 
 
 class visitors_permitted(Variable):
@@ -13,25 +11,12 @@ class visitors_permitted(Variable):
     label = 'What are the conditions for having visitors at places of residence?'
 
     def formula(persons, period, parameters):
-        rt = persons('return_type', period)
-        RT = rt.possible_values
+        AREA = Area.possible_values
         return select(
-            [(CategoryOfArea.area_of_concern),
-            (CategoryOfArea.stay_at_home_area),
-            not_(meets_criteria)],
-            [RT.persons('visitors_permitted_for_area_of_concern', period),
-            RT.permitted,
-            RT.not_permitted])
-
-
-
-        np.select([
-                         CategoryOfArea.area_of_concern,
-                         CategoryOfArea.stay_at_home_area],
-                         [
-                         persons('visitors_permitted_for_area_of_concern', period),
-                         persons('visitors_permitted_for_stay_at_home_area', period
-                         ])
+            [(AREA.area_of_concern),
+            (AREA.stay_at_home_area)],
+            [persons('visitors_permitted_for_area_of_concern', period),
+            persons('visitors_permitted_for_stay_at_home_area', period)])
 
 
 class visitors_permitted_for_area_of_concern(Variable):
@@ -55,7 +40,7 @@ class is_prescribed_work(Variable):
     entity = Person
     definition_period = ETERNITY
     label = 'Is the work relating to (a) cleaning, (b) repairs and maintenance'\
-            '(c) alterations and additions to persons'\
+            '(c) alterations and additions to buildings'\
             '(d) work carried out as part of a trade, including electrical'\
             'work or plumbing'
 
