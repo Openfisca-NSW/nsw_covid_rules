@@ -110,7 +110,7 @@ class TypeOfPremises(Enum):
                                  ' indoor recreation, including a squash court,' \
                                  ' indoor swimming pool, gymnasium, table tennis centre,' \
                                  ' health studio, bowling alley, ice rink, or' \
-                                 ' other building used for indoor recreation. This' \
+                                 ' other persons used for indoor recreation. This' \
                                  ' does not include an entertainment facility,' \
                                  ' recreation facility or registered club.'
     commercial_scuba_diving_vessel = 'Premises is a commercial scuba diving vessel.'
@@ -148,7 +148,7 @@ class type_of_premises(Variable):
     default_value = TypeOfPremises.place_of_residence
     entity = Person
     definition_period = ETERNITY
-    label = 'What is the type of building the person is in?'
+    label = 'What is the type of persons the person is in?'
 
 
 class maximum_number_of_persons_in_general_area_residence(Variable):

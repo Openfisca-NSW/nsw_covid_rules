@@ -9,7 +9,7 @@ import numpy as np
 # Part 3, Division 5; Part 4, Division 5.
 
 
-class NSW_COVID_19_must_wear_face_covering_general_area(Variable):
+class must_wear_face_covering_general_area(Variable):
     value_type = bool
     entity = Person
     default_value = False
@@ -37,7 +37,7 @@ class NSW_COVID_19_must_wear_face_covering_general_area(Variable):
                )
 
 
-class NSW_COVID_19_must_wear_face_covering_stay_at_home_area(Variable):
+class must_wear_face_covering_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
     default_value = False
@@ -65,7 +65,7 @@ class NSW_COVID_19_must_wear_face_covering_stay_at_home_area(Variable):
 # order which aren't contained in this definition - is this intentional?
 
 
-class NSW_COVID_19_must_wear_face_covering_area_of_concern(Variable):
+class must_wear_face_covering_area_of_concern(Variable):
     value_type = bool
     entity = Person
     default_value = False
@@ -262,3 +262,26 @@ class current_exempt_activity(Variable):
     definition_period = ETERNITY
     label = 'What activity is the person conducting, which makes them exempt' \
             ' from wearing a facemask?'
+
+
+class must_wear_face_covering(Variable):
+    value_type = bool
+    entity = Person
+    default_value = False
+    definition_period = ETERNITY
+    label = 'Do you need to wear a facemask?'
+
+    def formula(persons, period, parameters):
+        category_of_area = persons('category_of_area', period)
+        CategoryOfArea = (category_of_area.possible_values)
+        in_general_area = (category_of_area == CategoryOfArea.general_area)
+        in_stay_at_home_area = (category_of_area == CategoryOfArea.stay_at_home_area)
+        in_area_of_concern = (category_of_area == CategoryOfArea.area_of_concern)
+        must_wear_facemask = np.select([in_general_area,
+                                        in_stay_at_home_area,
+                                        in_area_of_concern],
+                                       [persons('must_wear_face_covering_general_area', period),
+                                        persons('must_wear_face_covering_stay_at_home_area', period),
+                                        persons('must_wear_face_covering_area_of_concern', period)])
+        exempt_from_wearing_facemask = persons('person_is_conducting_exempt_activity', period)
+        return (must_wear_facemask * np.logical_not(exempt_from_wearing_facemask))

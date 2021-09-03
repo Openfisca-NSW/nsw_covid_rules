@@ -1,0 +1,66 @@
+- name: Test vehicle variables - person is allowed to share vehicle in stay at home area
+    (vehicle is being used for work.)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: carry_out_work
+    passenger_relation: other_persons
+    category_of_area: stay_at_home_area
+  output:
+    allowed_to_share_vehicle_stay_at_home_area: True
+    allowed_to_share_vehicle: True
+- name: Test vehicle variables - person is allowed to share vehicle in stay at home area
+    (vehicle is being used for other reasons, person is member of their household)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: other_reason
+    passenger_relation: member_of_household
+    category_of_area: stay_at_home_area
+  output:
+    allowed_to_share_vehicle_stay_at_home_area: True
+    allowed_to_share_vehicle: True
+- name: Test vehicle variables - person is not allowed to share vehicle in stay at home area
+    (vehicle is being used for other reasons, person is not eligible relationship)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: other_reason
+    passenger_relation: other_persons
+    category_of_area: stay_at_home_area
+  output:
+    allowed_to_share_vehicle_stay_at_home_area: False
+    allowed_to_share_vehicle: False
+- name: Test vehicle variables - person is allowed to share vehicle in area of concern
+    (vehicle is being used for work.)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: carry_out_work
+    passenger_relation: other_persons
+    category_of_area: area_of_concern
+  output:
+    allowed_to_share_vehicle_area_of_concern: True
+    allowed_to_share_vehicle: True
+- name: Test vehicle variables - person is allowed to share vehicle in area of concern
+    (vehicle is being used for other reasons, person is member of their household)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: other_reason
+    passenger_relation: member_of_household
+    category_of_area: area_of_concern
+  output:
+    allowed_to_share_vehicle_area_of_concern: True
+    allowed_to_share_vehicle: True
+- name: Test vehicle variables - person is not allowed to share vehicle in area of concern
+    (vehicle is being used for other reasons, person is not eligible relationship)
+  period: 2021
+  absolute_error_margin: 0
+  input:
+    reason_for_vehicle_use: other_reason
+    passenger_relation: other_persons
+    category_of_area: area_of_concern
+  output:
+    allowed_to_share_vehicle_area_of_concern: False
+    allowed_to_share_vehicle: False
