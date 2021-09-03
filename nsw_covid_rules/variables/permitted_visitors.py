@@ -16,25 +16,9 @@ class visitors_permitted(Variable):
             [(AREA.area_of_concern),
             (AREA.stay_at_home_area),
             (AREA.general_area)],
-            [persons('visitors_permitted_for_area_of_concern', period),
+            [persons('visitors_permitted_for_areas_of_concern', period),
             persons('visitors_permitted_for_stay_at_home_area', period),
             persons('visitors_permitted_for_general_area', period)])
-
-
-class visitors_permitted_for_area_of_concern(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Is  person is authorised to visit a place of residence in a stay'\
-            'at home area'
-
-
-class visitors_permitted_for_general_area(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Is  person is authorised to visit a place of residence in a general'\
-            'area'
 
 
 class visitors_permitted_for_stay_at_home_area(Variable):
@@ -53,10 +37,62 @@ class visitors_permitted_for_stay_at_home_area(Variable):
         visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
         visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
         is_nominated_person = persons('is_nominated_person', period)
+        only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
+        nominated_individual_resides_in_stay_at_home_area = persons('nominated_individual_resides_in_stay_at_home_area', period)
         return (visiting_for_move_assistance + visiting_for_childcare
         + visiting_for_family_contact_arrangements + visiting_for_emergency
         + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
-        + visiting_for_carer_responsibilities + is_nominated_person)
+        + visiting_for_carer_responsibilities
+        + nominated_individual_resides_in_stay_at_home_area
+        + (is_nominated_person * only_one_adult_resides_at_premises))
+
+
+class nominated_individual_resides_in_stay_at_home_area(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  the nominated visitor the individual residing in a stay at home'\
+            'area but not in an area of concern?'
+
+
+class visitors_permitted_for_general_area(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person authorised to visit a place of residence in a general'\
+            'area'
+
+
+class visitors_permitted_for_areas_of_concern(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person authorised to visit a place of residence in a stay'\
+            'at home area?'
+
+    def formula(persons, period, parameters):
+        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
+        visiting_for_childcare = persons('visiting_for_childcare', period)
+        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
+        visiting_for_emergency = persons('visiting_for_emergency', period)
+        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
+        is_nominated_person = persons('is_nominated_person', period)
+        only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
+        return (visiting_for_move_assistance + visiting_for_childcare
+        + visiting_for_family_contact_arrangements + visiting_for_emergency
+        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
+        + visiting_for_carer_responsibilities + (is_nominated_person
+        * only_one_adult_resides_at_premises))
+
+
+class only_one_adult_resides_at_premises(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Does only one person reside in the place of' \
+            'residence?'
 
 
 class is_prescribed_work(Variable):
@@ -188,23 +224,3 @@ class visiting_for_carer_responsibilities(Variable):
     definition_period = ETERNITY
     label = 'Person visiting for carer’s responsibilities, to provide care or'\
             'assistance to a vulnerable person or for compassionate reasons'
-
-
-class authorised_to_visit_place_of_residence(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Is the person authorised to visit place of residence?'
-
-    def formula(persons, period, parameters):
-        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
-        visiting_for_childcare = persons('visiting_for_childcare', period)
-        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
-        visiting_for_emergency = persons('visiting_for_emergency', period)
-        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
-        return (visiting_for_move_assistance + visiting_for_childcare
-        + visiting_for_family_contact_arrangements + visiting_for_emergency
-        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
-        + visiting_for_carer_responsibilities)
