@@ -1,6 +1,53 @@
+from openfisca_core.indexed_enums import Enum
 from openfisca_core.model_api import *
 from openfisca_nsw_base.entities import *
 from openfisca_core.variables import Variable
+from nsw_covid_rules.variables.geographic_area import CategoryOfArea
+import numpy as np
+
+
+class visitors_permitted(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'What are the conditions for having visitors at places of residence?'
+
+    def formula(persons, period, parameters):
+        rt = persons('return_type', period)
+        RT = rt.possible_values
+        return select(
+            [(CategoryOfArea.area_of_concern),
+            (CategoryOfArea.stay_at_home_area),
+            not_(meets_criteria)],
+            [RT.persons('visitors_permitted_for_area_of_concern', period),
+            RT.permitted,
+            RT.not_permitted])
+
+
+
+        np.select([
+                         CategoryOfArea.area_of_concern,
+                         CategoryOfArea.stay_at_home_area],
+                         [
+                         persons('visitors_permitted_for_area_of_concern', period),
+                         persons('visitors_permitted_for_stay_at_home_area', period
+                         ])
+
+
+class visitors_permitted_for_area_of_concern(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person is authorised to visit a place of residence in a stay'\
+            'at home area'
+
+
+class visitors_permitted_for_stay_at_home_area(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person is authorised to visit a place of residence in an area'\
+            'of concern?'
 
 
 class is_prescribed_work(Variable):
@@ -13,7 +60,7 @@ class is_prescribed_work(Variable):
             'work or plumbing'
 
 
-class is_prescribed_work_permitted(Variable):
+class is_prescribed_work_necessary(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
@@ -25,9 +72,12 @@ class is_prescribed_work_permitted(Variable):
         work_required_for_emergency = persons('work_required_for_emergency', period)
         work_required_for_essential_utility = persons('work_required_for_essential_utility', period)
         work_required_for_fire_protection = persons('work_required_for_fire_protection', period)
-        return is_prescribed_work and (work_required_for_health_and_safety
-        or work_required_for_emergency or work_required_for_essential_utility
-        or work_required_for_fire_protection or work_required_for_cleaning_or_repairs)
+        work_required_for_cleaning_or_repairs = persons('work_required_for_cleaning_or_repairs', period)
+        work_required_for_sale_and_lease = persons('work_required_for_sale_and_lease', period)
+        return is_prescribed_work * (work_required_for_health_and_safety
+        + work_required_for_emergency + work_required_for_essential_utility
+        + work_required_for_fire_protection + work_required_for_cleaning_or_repairs
+        + work_required_for_sale_and_lease)
 
 
 class work_required_for_health_and_safety(Variable):
@@ -66,15 +116,86 @@ class work_required_for_cleaning_or_repairs(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
-    label = 'for prescribed work that is cleaning or repairs and maintenance'\
+    label = 'Is the prescribed work (cleaning or repairs and maintenance)'\
             'at a place of residence that is unoccupied when the work is being'\
-            'carried out'
+            'carried out?'
 
 
 class work_required_for_sale_and_lease(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
-    label = 'for prescribed work that is cleaning or repairs and maintenance'\
+    label = 'Is the prescribed work (cleaning or repairs and maintenance)'\
             'because it is necessary for the sale or lease of the place of'\
             'residence carried out'
+
+
+class visiting_for_move_assistance(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting to assist another person moving to or from the place of residence'
+
+
+class visiting_for_childcare(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting for childcare'
+
+
+class visiting_for_family_contact_arrangements(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting for family contact arrangements'
+
+
+class visiting_for_emergency(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting for emergency'
+
+
+class visiting_to_avoid_injury_or_harm(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting to avoid an injury, illness or risk of harm'
+
+
+class visiting_to_inspect_residence(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting to inspect the place of residence for sale or '\
+            'lease or to participate in an auction of the place of residence'
+
+
+class visiting_for_carer_responsibilities(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Person visiting for carer’s responsibilities, to provide care or'\
+            'assistance to a vulnerable person or for compassionate reasons'
+
+
+class authorised_to_visit_place_of_residence(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is the person authorised to visit place of residence?'
+
+    def formula(persons, period, parameters):
+        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
+        visiting_for_childcare = persons('visiting_for_childcare', period)
+        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
+        visiting_for_emergency = persons('visiting_for_emergency', period)
+        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
+        return (visiting_for_move_assistance + visiting_for_childcare
+        + visiting_for_family_contact_arrangements + visiting_for_emergency
+        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
+        + visiting_for_carer_responsibilities)
