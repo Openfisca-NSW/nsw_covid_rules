@@ -1,0 +1,98 @@
+- name: Person visiting for move assistance in stay at home area, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: True
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting for childcare in stay at home area, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: True
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting for contact arrangements in stay at home area, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: True
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting for emergency in stay at home area, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: True
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting to avoid injury or harm, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: True
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting for carer responsibilities, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: True
+    is_nominated_person: False
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: False
+  output:
+    is_permitted_for_non_work_activities: True
+- name: Person visiting is nominated person, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: True
+    only_one_adult_resides_at_premises: True
+    nominated_individual_resides_in_stay_at_home_area: True
+  output:
+    is_permitted_for_non_work_activities: True
