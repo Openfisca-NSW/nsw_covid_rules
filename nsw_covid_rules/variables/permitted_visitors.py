@@ -4,7 +4,7 @@ from openfisca_core.variables import Variable
 from nsw_covid_rules.variables.geographic_area import CategoryOfArea as Area
 
 
-class visitors_permitted(Variable):
+class conditions_for_area_of_visitor(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
@@ -29,12 +29,40 @@ class visitors_permitted_for_stay_at_home_area(Variable):
             'of concern?'
 
     def formula(persons, period, parameters):
+        return select(
+            [persons('visiting_for_work', period),
+            persons('visiting_for_non_work_activities', period)],
+            [persons('is_prescribed_work_necessary', period),
+            persons('is_permitted_for_non_work_activities', period)])
+
+
+class visiting_for_work(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  the person visiting for work related purposes?'
+
+
+class visiting_for_non_work_activities(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  the person visiting for non-work related (other) activities?'
+
+
+class is_permitted_for_non_work_activities(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person permitted to visit for non-work activities?'
+
+    def formula(persons, period, parameters):
         visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
         visiting_for_childcare = persons('visiting_for_childcare', period)
         visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
         visiting_for_emergency = persons('visiting_for_emergency', period)
         visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_inspect_residence', period)
         visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
         is_nominated_person = persons('is_nominated_person', period)
         only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
@@ -43,8 +71,8 @@ class visitors_permitted_for_stay_at_home_area(Variable):
         + visiting_for_family_contact_arrangements + visiting_for_emergency
         + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
         + visiting_for_carer_responsibilities
-        + nominated_individual_resides_in_stay_at_home_area
-        + (is_nominated_person * only_one_adult_resides_at_premises))
+        + (is_nominated_person * only_one_adult_resides_at_premises
+        * nominated_individual_resides_in_stay_at_home_area))
 
 
 class nominated_individual_resides_in_stay_at_home_area(Variable):
