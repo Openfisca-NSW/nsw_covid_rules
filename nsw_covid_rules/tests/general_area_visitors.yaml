@@ -1,0 +1,39 @@
+- name: Person visiting for move assistance in general area, visitors permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: True
+    permitted_number_of_visitors_general_area: True
+    visiting_for_carer_responsibilities: False
+    visiting_for_compassionate_reasons: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_significant_event: False
+    visiting_to_inspect_residence: False
+  output:
+    visitors_permitted_for_general_area: True
+- name: Number of visitors exceeds allowable limit, visitors not permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    permitted_number_of_visitors_general_area: False
+    visiting_for_carer_responsibilities: False
+    visiting_for_compassionate_reasons: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_significant_event: False
+    visiting_to_inspect_residence: False
+  output:
+    visitors_permitted_for_general_area: False
+- name: Person visiting for carer responsibilities in general area, visitors permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    permitted_number_of_visitors_general_area: False
+    visiting_for_carer_responsibilities: True
+    visiting_for_compassionate_reasons: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_significant_event: False
+    visiting_to_inspect_residence: False
+  output:
+    visitors_permitted_for_general_area: True
