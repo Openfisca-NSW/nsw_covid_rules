@@ -96,3 +96,31 @@
     nominated_individual_resides_in_stay_at_home_area: True
   output:
     is_permitted_for_non_work_activities: True
+- name: Person visiting is nominated person but other adults live in premises, is not permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: True
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: True
+  output:
+    is_permitted_for_non_work_activities: False
+- name: Person visiting is nominated person but other adults live in premises, is not permitted
+  period: 2021-09-01
+  input:
+    visiting_for_move_assistance: False
+    visiting_for_childcare: False
+    visiting_for_family_contact_arrangements: False
+    visiting_for_emergency: False
+    visiting_to_avoid_injury_or_harm: False
+    visiting_for_carer_responsibilities: False
+    is_nominated_person: True
+    only_one_adult_resides_at_premises: False
+    nominated_individual_resides_in_stay_at_home_area: True
+  output:
+    is_permitted_for_non_work_activities: False
