@@ -2,19 +2,22 @@
   period: 2021-09-01
   input:
     visiting_person_is_worker: True
+    visiting_for_non_work_activities: True
     is_prescribed_work: False
   output:
-    worker_permitted_area_of_concern: True
+    visitors_permitted_for_area_of_concern: True
 - name: Worker visiting to conduct prescribed, necessary indoor work in
       area of concern, is permitted
   period: 2021-09-01
   input:
+    category_of_area: area_of_concern
     visiting_person_is_worker: True
     is_prescribed_work: True
     work_conducted_in_indoor_area: True
     is_prescribed_work_necessary: True
   output:
     worker_permitted_area_of_concern: True
+    are_visitors_permitted: True
 - name: Worker visiting to conduct prescribed, necessary indoor work in
       area of concern, is not permitted
   period: 2021-09-01

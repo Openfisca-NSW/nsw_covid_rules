@@ -1,0 +1,8 @@
+- name: Worker visiting to provide care while nobody else is already visiting to
+    provide care, is permitted
+  period: 2021-09-01
+  input:
+    visiting_for_carer_responsibilities: True
+    another_person_currently_visiting_for_care_or_compassionate_reasons: False
+  output:
+    eligible_to_provide_care_or_compassionate_visit: True

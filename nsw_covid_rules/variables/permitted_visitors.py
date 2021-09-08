@@ -143,15 +143,17 @@ class permitted_for_non_work_activities_in_stay_at_home_area(Variable):
         visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
         visiting_to_inspect_residence = persons('visiting_to_inspect_residence', period)
         visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
+        visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
+        eligible_to_provide_care_or_compassionate_visit = (visiting_for_carer_responsibilities
+                                                           + visiting_for_compassionate_reasons
+                                                           * persons('eligible_to_provide_care_or_compassionate_visit', period))
         is_nominated_person = persons('is_nominated_person', period)
         only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
-        visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
         nominated_individual_resides_in_stay_at_home_area = persons('nominated_individual_resides_in_stay_at_home_area', period)
         return (visiting_for_move_assistance + visiting_for_childcare
         + visiting_for_family_contact_arrangements + visiting_for_emergency
         + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
-        + visiting_for_carer_responsibilities
-        + visiting_for_compassionate_reasons
+        + eligible_to_provide_care_or_compassionate_visit
         + (is_nominated_person * only_one_adult_resides_at_premises
         * nominated_individual_resides_in_stay_at_home_area))
 
@@ -163,6 +165,13 @@ class visitors_permitted_for_area_of_concern(Variable):
     definition_period = ETERNITY
     label = 'Is  person is authorised to visit a place of residence in an area'\
             'of concern?'
+
+    def formula(persons, period, parameters):
+        return select(
+            [persons('visiting_person_is_worker', period),
+            persons('visiting_for_non_work_activities', period)],
+            [persons('worker_permitted_area_of_concern', period),
+             persons('permitted_for_non_work_activities_in_area_of_concern', period)])
 
 
 class outdoor_workers_exceeds_limit_area_of_concern(Variable):
@@ -194,6 +203,34 @@ class worker_permitted_area_of_concern(Variable):
                 )
 
 
+class permitted_for_non_work_activities_in_area_of_concern(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is  person authorised to visit a place of residence in a stay'\
+            'at home area?'
+
+    def formula(persons, period, parameters):
+        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
+        visiting_for_childcare = persons('visiting_for_childcare', period)
+        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
+        visiting_for_emergency = persons('visiting_for_emergency', period)
+        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
+        visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
+        eligible_to_provide_care_or_compassionate_visit = (visiting_for_carer_responsibilities
+                                                           + visiting_for_compassionate_reasons
+                                                           * persons('eligible_to_provide_care_or_compassionate_visit', period))
+        is_nominated_person = persons('is_nominated_person', period)
+        only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
+        return (visiting_for_move_assistance + visiting_for_childcare
+        + visiting_for_family_contact_arrangements + visiting_for_emergency
+        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
+        + eligible_to_provide_care_or_compassionate_visit
+        + (is_nominated_person * only_one_adult_resides_at_premises))
+
+
 # COMMON CONDITIONS
 class visiting_person_is_worker(Variable):
     value_type = bool
@@ -216,31 +253,6 @@ class nominated_individual_resides_in_stay_at_home_area(Variable):
     definition_period = ETERNITY
     label = 'Is  the nominated visitor the individual residing in a stay at home'\
             'area but not in an area of concern?'
-
-
-class permitted_for_non_work_activities_in_area_of_concern(Variable):
-    value_type = bool
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Is  person authorised to visit a place of residence in a stay'\
-            'at home area?'
-
-    def formula(persons, period, parameters):
-        visiting_for_move_assistance = persons('visiting_for_move_assistance', period)
-        visiting_for_childcare = persons('visiting_for_childcare', period)
-        visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
-        visiting_for_emergency = persons('visiting_for_emergency', period)
-        visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
-        visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
-        is_nominated_person = persons('is_nominated_person', period)
-        only_one_adult_resides_at_premises = persons('only_one_adult_resides_at_premises', period)
-        return (visiting_for_move_assistance + visiting_for_childcare
-        + visiting_for_family_contact_arrangements + visiting_for_emergency
-        + visiting_to_avoid_injury_or_harm + visiting_to_inspect_residence
-        + visiting_for_carer_responsibilities + visiting_for_compassionate_reasons
-        + (is_nominated_person * only_one_adult_resides_at_premises))
 
 
 class only_one_adult_resides_at_premises(Variable):
@@ -413,3 +425,37 @@ class visiting_for_compassionate_reasons(Variable):
     entity = Person
     definition_period = ETERNITY
     label = 'Person visiting for compassionate reasons'
+
+
+class eligible_to_provide_care_or_compassionate_visit(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is the person eligible to provide care in the place of residence,' \
+            ' or visit for compassionate reasons?'
+
+    def formula(persons, period, parameters):
+        visiting_for_care = persons('visiting_for_carer_responsibilities', period)
+        visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
+        another_person_currently_visiting = persons('another_person_currently_visiting_for_care_or_compassionate_reasons', period)
+        two_people_required_to_provide_care = persons('two_people_required_to_provide_care', period)
+        eligible_to_provide_care = (visiting_for_care
+                                    * (not_(another_person_currently_visiting)
+                                        + two_people_required_to_provide_care))
+        eligible_to_provide_compassionate_visit = (visiting_for_compassionate_reasons
+                                                   * (not_(another_person_currently_visiting)))
+        return (eligible_to_provide_care + eligible_to_provide_compassionate_visit)
+
+
+class another_person_currently_visiting_for_care_or_compassionate_reasons(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is another person already visiting to provide care, or for compassionate reasons?'
+
+
+class two_people_required_to_provide_care(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Are two people required to provide care safely?'
