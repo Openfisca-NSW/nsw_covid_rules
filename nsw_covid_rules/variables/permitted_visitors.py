@@ -155,7 +155,7 @@ class visitors_permitted_for_area_of_concern(Variable):
              persons('permitted_for_non_work_activities_in_stay_at_home_area', period)])
 
 
-class outdoor_workers_within_limit_area_of_concern(Variable):
+class outdoor_workers_exceeds_limit_area_of_concern(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
@@ -163,7 +163,7 @@ class outdoor_workers_within_limit_area_of_concern(Variable):
             'of the place of residence?'
 
 
-class indoor_or_outdoor_non_prescribed_work_permitted_area_of_concern(Variable):
+class worker_permitted_area_of_concern(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
@@ -172,10 +172,16 @@ class indoor_or_outdoor_non_prescribed_work_permitted_area_of_concern(Variable):
             'the permitted threshold?'
 
     def formula(persons, period, parameters):
-        return
-        (not_(persons('work_conducted_in_indoor_area', period))
-        + (persons('work_conducted_in_outdoor_area', period)
-         * not_(persons('outdoor_workers_within_limit_stay_at_home_area', period))))
+        visitor_is_worker = persons('visiting_person_is_worker', period)
+        is_prescribed_work = persons('is_prescribed_work', period)
+        is_necessary_prescribed_work = persons('is_prescribed_work_necessary', period)
+        is_outdoor_work = persons('work_conducted_in_outdoor_area', period)
+        exceeds_outdoor_workers_limit = persons('outdoor_workers_exceeds_limit_area_of_concern', period)
+        is_eligible_outdoors_work = (is_outdoor_work * (not(exceeds_outdoor_workers_limit)))
+        return (visitor_is_worker
+                * (is_prescribed_work * (is_necessary_prescribed_work + is_eligible_outdoors_work))
+                + not_(is_prescribed_work)
+                )
 
 
 # COMMON CONDITIONS
