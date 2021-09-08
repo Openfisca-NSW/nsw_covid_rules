@@ -1,7 +1,6 @@
 from openfisca_core.model_api import *
 from openfisca_nsw_base.entities import *
 from openfisca_core.variables import Variable
-from nsw_covid_rules.variables.geographic_area import CategoryOfArea as Area
 
 
 # Main variable for outputing result i.e. if visitors are allowed at premises or not.
@@ -12,19 +11,24 @@ class are_visitors_permitted(Variable):
     label = 'Are visitors permitted to visit my place of residence?'
 
     def formula(persons, period, parameters):
-        AREA = Area.possible_values
+        category_of_area = persons('category_of_area', period)
+        AREA = category_of_area.possible_values
+        in_area_of_concern = (category_of_area == AREA.area_of_concern)
+        in_stay_at_home_area = (category_of_area == AREA.stay_at_home_area)
+        in_general_area = (category_of_area == AREA.general_area)
         return select(
-            [(AREA.area_of_concern),
-            (AREA.stay_at_home_area),
-            (AREA.general_area)],
-            [persons('visitors_permitted_for_areas_of_concern', period),
-            persons('visitors_permitted_for_stay_at_home_area', period),
-            persons('visitors_permitted_for_general_area', period)])
+            [in_area_of_concern,
+             in_stay_at_home_area,
+             in_general_area],
+            [persons('visitors_permitted_for_area_of_concern', period),
+             persons('visitors_permitted_for_stay_at_home_area', period),
+             persons('visitors_permitted_for_general_area', period)])
 
 
 # GENERAL AREA
 class visitors_permitted_for_general_area(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Is  person is authorised to visit a place of residence in a general'\
@@ -63,8 +67,7 @@ class visitors_permitted_for_stay_at_home_area(Variable):
         return select(
             [persons('visiting_person_is_worker', period),
             persons('visiting_for_non_work_activities', period)],
-            [((persons('is_prescribed_work', period) * persons('is_prescribed_work_necessary', period))
-            + persons('indoor_or_outdoor_non_prescribed_work_permitted_stay_at_home_area', period)),
+            [persons('worker_permitted_stay_at_home_area', period),
              persons('permitted_for_non_work_activities_in_stay_at_home_area', period)])
 
 
@@ -83,12 +86,18 @@ class worker_permitted_stay_at_home_area(Variable):
         is_outdoor_work = persons('work_conducted_in_outdoor_area', period)
         exceeds_indoor_workers_limit = persons('indoor_workers_exceed_limit_stay_at_home_area', period)
         exceeds_outdoor_workers_limit = persons('outdoor_workers_exceed_limit_stay_at_home_area', period)
-        is_eligible_indoors_work = (is_indoor_work * (not(exceeds_indoor_workers_limit)))
-        is_eligible_outdoors_work = (is_outdoor_work * (not(exceeds_outdoor_workers_limit)))
+        indoor_non_workers_are_present = persons('indoor_non_workers_are_present_at_indoor_work_site', period)
+        is_non_necessary_eligible_indoors_work = (is_indoor_work
+                                                  * (not(exceeds_indoor_workers_limit))
+                                                  * (not(indoor_non_workers_are_present)))
+        is_non_necessary_eligible_outdoors_work = (is_outdoor_work
+                                                   * (not(exceeds_outdoor_workers_limit)))
         return (visitor_is_worker
-                * ((is_prescribed_work * is_necessary_prescribed_work
-                   * (is_eligible_indoors_work + is_eligible_outdoors_work))
-                + not_(is_prescribed_work))
+                * ((is_prescribed_work
+                    * (is_necessary_prescribed_work
+                    + (is_non_necessary_eligible_indoors_work
+                       + is_non_necessary_eligible_outdoors_work))
+                + not_(is_prescribed_work)))
                 )
 
 
@@ -99,6 +108,15 @@ class indoor_workers_exceed_limit_stay_at_home_area(Variable):
     definition_period = ETERNITY
     label = 'Will there be more than two workers in an indoor area'\
             'of the place of residence?'
+
+
+class indoor_non_workers_are_present_at_indoor_work_site(Variable):
+    value_type = bool
+    entity = Person
+    default_value = False
+    definition_period = ETERNITY
+    label = 'Is a person who is not a worker in the same room as the worker(s),' \
+            ' when the worker(s) carries out prescribed work?'
 
 
 class outdoor_workers_exceed_limit_stay_at_home_area(Variable):
@@ -145,14 +163,6 @@ class visitors_permitted_for_area_of_concern(Variable):
     definition_period = ETERNITY
     label = 'Is  person is authorised to visit a place of residence in an area'\
             'of concern?'
-
-    def formula(persons, period, parameters):
-        return select(
-            [persons('visiting_person_is_worker', period),
-            persons('visiting_for_non_work_activities', period)],
-            [((persons('is_prescribed_work', period) * persons('is_prescribed_work_necessary', period))
-            + persons('indoor_or_outdoor_non_prescribed_work_permitted_area_of_concern', period)),
-             persons('permitted_for_non_work_activities_in_stay_at_home_area', period)])
 
 
 class outdoor_workers_exceeds_limit_area_of_concern(Variable):
