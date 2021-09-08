@@ -31,17 +31,17 @@ class visitors_permitted_for_general_area(Variable):
             'area?'
 
     def formula(persons, period, parameters):
-        return (not_(persons('permitted_number_of_visitors_general_area', period))
-        * persons('visiting_for_move_assistance', period)
-        * persons('visiting_for_childcare', period)
-        * persons('visiting_for_carer_responsibilities', period)
-        * persons('visiting_for_compassionate_reasons', period)
-        * persons('visiting_for_family_contact_arrangements', period)
-        * persons('visiting_for_significant_event', period)
-        * persons('visiting_to_inspect_residence', period))
+        return ((not_(persons('maximum_permitted_number_of_visitors_general_area_present', period)))
+        + persons('visiting_for_move_assistance', period)
+        + persons('visiting_for_childcare', period)
+        + persons('visiting_for_carer_responsibilities', period)
+        + persons('visiting_for_compassionate_reasons', period)
+        + persons('visiting_for_family_contact_arrangements', period)
+        + persons('visiting_for_significant_event', period)
+        + persons('visiting_to_inspect_residence', period))
 
 
-class permitted_number_of_visitors_general_area(Variable):
+class maximum_permitted_number_of_visitors_general_area_present(Variable):
     value_type = int
     entity = Person
     definition_period = ETERNITY
@@ -68,7 +68,7 @@ class visitors_permitted_for_stay_at_home_area(Variable):
              persons('permitted_for_non_work_activities_in_stay_at_home_area', period)])
 
 
-class indoor_or_outdoor_non_prescribed_work_permitted_stay_at_home_area(Variable):
+class worker_permitted_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
@@ -76,24 +76,35 @@ class indoor_or_outdoor_non_prescribed_work_permitted_stay_at_home_area(Variable
             'or outdoor workers in a stay at home area be within the permitted threshold?'
 
     def formula(persons, period, parameters):
-        return
-        (persons('work_conducted_in_indoor_area', period)
-         * not_(persons('indoor_workers_within_limit_stay_at_home_area', period)))
-        + (persons('work_conducted_in_outdoor_area', period)
-         * not_(persons('outdoor_workers_within_limit_stay_at_home_area', period)))
+        visitor_is_worker = persons('visiting_person_is_worker', period)
+        is_prescribed_work = persons('is_prescribed_work', period)
+        is_necessary_prescribed_work = persons('is_prescribed_work_necessary', period)
+        is_indoor_work = persons('work_conducted_in_indoor_area', period)
+        is_outdoor_work = persons('work_conducted_in_outdoor_area', period)
+        exceeds_indoor_workers_limit = persons('indoor_workers_exceed_limit_stay_at_home_area', period)
+        exceeds_outdoor_workers_limit = persons('outdoor_workers_exceed_limit_stay_at_home_area', period)
+        is_eligible_indoors_work = (is_indoor_work * (not(exceeds_indoor_workers_limit)))
+        is_eligible_outdoors_work = (is_outdoor_work * (not(exceeds_outdoor_workers_limit)))
+        return (visitor_is_worker
+                * ((is_prescribed_work * is_necessary_prescribed_work
+                   * (is_eligible_indoors_work + is_eligible_outdoors_work))
+                + not_(is_prescribed_work))
+                )
 
 
-class indoor_workers_within_limit_stay_at_home_area(Variable):
+class indoor_workers_exceed_limit_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
+    default_value = False
     definition_period = ETERNITY
     label = 'Will there be more than two workers in an indoor area'\
             'of the place of residence?'
 
 
-class outdoor_workers_within_limit_stay_at_home_area(Variable):
+class outdoor_workers_exceed_limit_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
+    default_value = False
     definition_period = ETERNITY
     label = 'Will there be more than five workers in an outdoor area'\
             'of the place of residence?'
@@ -102,6 +113,7 @@ class outdoor_workers_within_limit_stay_at_home_area(Variable):
 class permitted_for_non_work_activities_in_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
+    default_value = False
     definition_period = ETERNITY
     label = 'Is  person permitted to visit for non-work activities?'
 
@@ -169,6 +181,7 @@ class indoor_or_outdoor_non_prescribed_work_permitted_area_of_concern(Variable):
 # COMMON CONDITIONS
 class visiting_person_is_worker(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Is the visiting person a worker?'
@@ -216,6 +229,7 @@ class permitted_for_non_work_activities_in_area_of_concern(Variable):
 
 class only_one_adult_resides_at_premises(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Does only one person reside in the place of' \
@@ -224,6 +238,7 @@ class only_one_adult_resides_at_premises(Variable):
 
 class is_prescribed_work(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Is the work relating to (a) cleaning, (b) repairs and maintenance'\
@@ -234,6 +249,7 @@ class is_prescribed_work(Variable):
 
 class is_prescribed_work_necessary(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Is the prescribed work necessary to be carried out?'
@@ -304,6 +320,7 @@ class is_prescribed_work_necessary(Variable):
 
 class work_conducted_in_indoor_area(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Will there the work be conducted in an indoor area?'
@@ -311,6 +328,7 @@ class work_conducted_in_indoor_area(Variable):
 
 class work_conducted_in_outdoor_area(Variable):
     value_type = bool
+    default_value = False
     entity = Person
     definition_period = ETERNITY
     label = 'Will there the work be conducted in an outdoor area?'

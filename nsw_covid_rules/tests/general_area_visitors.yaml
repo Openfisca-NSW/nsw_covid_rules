@@ -2,7 +2,7 @@
   period: 2021-09-01
   input:
     visiting_for_move_assistance: True
-    permitted_number_of_visitors_general_area: True
+    maximum_permitted_number_of_visitors_general_area_present: True
     visiting_for_carer_responsibilities: False
     visiting_for_compassionate_reasons: False
     visiting_for_childcare: False
@@ -15,7 +15,7 @@
   period: 2021-09-01
   input:
     visiting_for_move_assistance: False
-    permitted_number_of_visitors_general_area: False
+    maximum_permitted_number_of_visitors_general_area_present: True
     visiting_for_carer_responsibilities: False
     visiting_for_compassionate_reasons: False
     visiting_for_childcare: False
@@ -28,7 +28,7 @@
   period: 2021-09-01
   input:
     visiting_for_move_assistance: False
-    permitted_number_of_visitors_general_area: False
+    maximum_permitted_number_of_visitors_general_area_present: False
     visiting_for_carer_responsibilities: True
     visiting_for_compassionate_reasons: False
     visiting_for_childcare: False

@@ -1,0 +1,7 @@
+- name: Worker visiting to conduct non-prescribed work in stay at home area, is permitted
+  period: 2021-09-01
+  input:
+    visiting_person_is_worker: True
+    is_prescribed_work: False
+  output:
+    worker_permitted_stay_at_home_area: True
