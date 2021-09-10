@@ -217,7 +217,7 @@ class permitted_for_non_work_activities_in_area_of_concern(Variable):
         visiting_for_family_contact_arrangements = persons('visiting_for_family_contact_arrangements', period)
         visiting_for_emergency = persons('visiting_for_emergency', period)
         visiting_to_avoid_injury_or_harm = persons('visiting_to_avoid_injury_or_harm', period)
-        visiting_to_inspect_residence = persons('visiting_to_avoid_injury_or_harm', period)
+        visiting_to_inspect_residence = persons('visiting_to_inspect_residence', period)
         visiting_for_carer_responsibilities = persons('visiting_for_carer_responsibilities', period)
         visiting_for_compassionate_reasons = persons('visiting_for_compassionate_reasons', period)
         eligible_to_provide_care_or_compassionate_visit = (visiting_for_carer_responsibilities
