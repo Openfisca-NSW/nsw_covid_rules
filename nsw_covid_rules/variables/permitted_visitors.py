@@ -178,6 +178,7 @@ class outdoor_workers_exceeds_limit_area_of_concern(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
+    default_value = False
     label = 'Will there be more than five workers in an outdoor area'\
             'of the place of residence?'
 
