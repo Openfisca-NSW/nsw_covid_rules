@@ -76,37 +76,37 @@ class is_eligible_to_be_nominated_person(Variable):
 
     def formula(persons, period, parameters):
         return (
-            persons('noPersonNominated', period)
-            and persons('notNomatedForAnotherPerson', period)
+            persons('onlyPersonNominated', period)
+            and not_(persons('nominatedForAnotherPerson', period))
             and persons('livingWithinFiveKm', period)
             )
 
 
-class noPersonNominated(Variable):
+class onlyPersonNominated(Variable):
     value_type = bool
     entity = Person
-    definition_period = DAY
-    label = 'No other individual has been a nominated visitor for the person'
+    definition_period = ETERNITY
+    label = 'Are they the only visitor you’ve nominated?'
 
 
-class notNomatedForAnotherPerson(Variable):
+class nominatedForAnotherPerson(Variable):
     value_type = bool
     entity = Person
-    definition_period = DAY
+    definition_period = ETERNITY
     label = 'Individual has not been a nominated visitor for another person'
 
 
 class livingWithinFiveKm(Variable):
     value_type = bool
     entity = Person
-    definition_period = DAY
+    definition_period = ETERNITY
     label = 'Nominated individual resides within 5km of the place of residence'
 
 
 class is_nominated_person(Variable):
     value_type = bool
     entity = Person
-    definition_period = DAY
+    definition_period = ETERNITY
     label = 'The person has been issued a nominated person permit by Service NSW'
 
 # code relating to permit requirements for entering and leaving Greater Sydney,

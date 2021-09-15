@@ -1,7 +1,7 @@
 - name: Nominated person meets all conditions for permit
   period: 2021-09-01
   input:
-    noPersonNominated: True
+    onlyPersonNominated: True
     notNomatedForAnotherPerson: True
     livingWithinFiveKm: True
   output:
@@ -10,7 +10,7 @@
     already has another visitor
   period: 2021-09-01
   input:
-    noPersonNominated: False
+    onlyPersonNominated: False
     notNomatedForAnotherPerson: True
     livingWithinFiveKm: True
   output:
@@ -19,7 +19,7 @@
     already is nominated as a visitor for another person
   period: 2021-09-01
   input:
-    noPersonNominated: True
+    onlyPersonNominated: True
     notNomatedForAnotherPerson: False
     livingWithinFiveKm: True
   output:
@@ -28,7 +28,7 @@
     does not live within 5 kilometres
   period: 2021-09-01
   input:
-    noPersonNominated: True
+    onlyPersonNominated: True
     notNomatedForAnotherPerson: True
     livingWithinFiveKm: False
   output:
