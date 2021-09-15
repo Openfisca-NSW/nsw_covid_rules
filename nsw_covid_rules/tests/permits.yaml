@@ -2,16 +2,16 @@
   period: 2021-09-01
   input:
     onlyPersonNominated: True
-    notNomatedForAnotherPerson: True
+    nominatedForAnotherPerson: False
     livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: True
 - name: Nominated person is not eligible to be nominated as a visitor - person
-    already has another visitor
+    already has another nominated visitor
   period: 2021-09-01
   input:
     onlyPersonNominated: False
-    notNomatedForAnotherPerson: True
+    nominatedForAnotherPerson: False
     livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: False
@@ -20,7 +20,7 @@
   period: 2021-09-01
   input:
     onlyPersonNominated: True
-    notNomatedForAnotherPerson: False
+    nominatedForAnotherPerson: True
     livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: False
@@ -29,7 +29,7 @@
   period: 2021-09-01
   input:
     onlyPersonNominated: True
-    notNomatedForAnotherPerson: True
+    nominatedForAnotherPerson: False
     livingWithinFiveKm: False
   output:
     is_eligible_to_be_nominated_person: False

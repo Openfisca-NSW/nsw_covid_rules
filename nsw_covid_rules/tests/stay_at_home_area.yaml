@@ -104,7 +104,7 @@
   period: 2021
   absolute_error_margin: 0
   input:
-    person_suburb_of_residence: "Colyson"
+    person_suburb_of_residence: "Colyton"
     person_LGA_of_residence: city_of_penrith
   output:
     category_of_area: area_of_concern
