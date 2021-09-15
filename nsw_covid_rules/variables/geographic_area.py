@@ -32,46 +32,6 @@ class lgaShortName(Variable):
     label = 'What LGA is the person residing in?'
 
 
-class LGA_category_of_area(Variable):
-    value_type = str
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Based on suburb and LGA, which category of area does the person live in?'
-
-    def formula(persons, period, parameters):
-        suburb = persons('person_suburb_of_residence', period)
-        lgaShortName = persons('lgaShortName', period)
-        state = ('person_state_of_residence', period)
-        residence_category = ((state == 'NSW')
-            * (lgaShortName == 'BAYSIDE')
-            + (lgaShortName == 'BLACKTOWN')
-            + (lgaShortName == 'BURWOOD')
-            + (lgaShortName == 'CAMPBELLTOWN')
-            + (lgaShortName == 'CANTERBURY-BANKSTOWN')
-            + (lgaShortName == 'CUMBERLAND')
-            + (lgaShortName == 'FAIRFIELD')
-            + (lgaShortName == 'GEORGES RIVER')
-            + (lgaShortName == 'LIVERPOOL')
-            + (lgaShortName == 'PARRAMATTA')
-            + (lgaShortName == 'STRATHFIELD')
-            + ((lgaShortName == 'PENRITH')
-                * ((suburb == 'CADDENS')
-                    + (suburb == 'CLAREMONT MEADOWS')
-                    + (suburb == 'COLYTON')
-                    + (suburb == 'ERSKINE PARK')
-                    + (suburb == 'KEMPS CREEK')
-                    + (suburb == 'KINGSWOOD')
-                    + (suburb == 'NORTH ST MARYS')
-                    + (suburb == 'MOUNT VERNON')
-                    + (suburb == 'ORCHARD HILLS')
-                    + (suburb == 'OXLEY PARK')
-                    + (suburb == 'ST CLAIR')
-                    + (suburb == 'ST MARYS'))))
-        return np.where(residence_category,
-        CategoryOfArea.area_of_concern,
-        CategoryOfArea.stay_at_home_area)
-
-
 class LGAResidence(Enum):
     city_of_albury = 'Person resides in the City of Albury LGA.'
     armidale = 'Person resides in the Armidale LGA.'
@@ -162,3 +122,45 @@ class category_of_area(Variable):
     # note that Schedule 1, Part 2 currently defines the whole state as being in
     # either a stay at home area or an area of concern - there is no part of NSW
     # currently in "the general area"
+
+
+class LGA_category_of_area(Variable):
+    value_type = Enum
+    possible_values = CategoryOfArea
+    default_value = CategoryOfArea.general_area
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Based on suburb and LGA, which category of area does the person live in?'
+
+    def formula(persons, period, parameters):
+        suburb = persons('person_suburb_of_residence', period)
+        lgaShortName = persons('lgaShortName', period)
+        state = persons('person_state_of_residence', period)
+        residence_category = ((state == 'NSW')
+            * ((lgaShortName == 'BAYSIDE')
+            + (lgaShortName == 'BLACKTOWN')
+            + (lgaShortName == 'BURWOOD')
+            + (lgaShortName == 'CAMPBELLTOWN')
+            + (lgaShortName == 'CANTERBURY-BANKSTOWN')
+            + (lgaShortName == 'CUMBERLAND')
+            + (lgaShortName == 'FAIRFIELD')
+            + (lgaShortName == 'GEORGES RIVER')
+            + (lgaShortName == 'LIVERPOOL')
+            + (lgaShortName == 'PARRAMATTA')
+            + (lgaShortName == 'STRATHFIELD')
+            + ((lgaShortName == 'PENRITH')
+                * ((suburb == 'CADDENS')
+                    + (suburb == 'CLAREMONT MEADOWS')
+                    + (suburb == 'COLYTON')
+                    + (suburb == 'ERSKINE PARK')
+                    + (suburb == 'KEMPS CREEK')
+                    + (suburb == 'KINGSWOOD')
+                    + (suburb == 'NORTH ST MARYS')
+                    + (suburb == 'MOUNT VERNON')
+                    + (suburb == 'ORCHARD HILLS')
+                    + (suburb == 'OXLEY PARK')
+                    + (suburb == 'ST CLAIR')
+                    + (suburb == 'ST MARYS')))))
+        return np.where(residence_category,
+        CategoryOfArea.area_of_concern,
+        CategoryOfArea.stay_at_home_area)
