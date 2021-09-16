@@ -136,7 +136,7 @@ class LGA_category_of_area(Variable):
         suburb = persons('person_suburb_of_residence', period)
         lgaShortName = persons('lgaShortName', period)
         state = persons('person_state_of_residence', period)
-        residence_category = ((state == 'NSW')
+        area_of_concern = ((state == 'NSW')
             * ((lgaShortName == 'BAYSIDE')
             + (lgaShortName == 'BLACKTOWN')
             + (lgaShortName == 'BURWOOD')
@@ -161,6 +161,27 @@ class LGA_category_of_area(Variable):
                     + (suburb == 'OXLEY PARK')
                     + (suburb == 'ST CLAIR')
                     + (suburb == 'ST MARYS')))))
-        return np.where(residence_category,
-        CategoryOfArea.area_of_concern,
-        CategoryOfArea.stay_at_home_area)
+        general_area = ((state == 'NSW')
+            * ((lgaShortName == 'BEGA VALLEY')
+            + (lgaShortName == 'BLAYNEY')
+            + (lgaShortName == 'BOGAN')
+            + (lgaShortName == 'CABONNE')
+            + (lgaShortName == 'DUNGOG')
+            + (lgaShortName == 'FORBES')
+            + (lgaShortName == 'MUSWELLBROOK')
+            + (lgaShortName == 'NARRABRI')
+            + (lgaShortName == 'PARKES')
+            + (lgaShortName == 'SINGLETON')
+            + (lgaShortName == 'SNOWY MONARO REGIONAL')
+            + (lgaShortName == 'UPPER HUNTER')))
+        stay_at_home_area = state == 'NSW'
+        return np.select([
+            area_of_concern,
+            general_area,
+            stay_at_home_area,
+            ],
+            [
+            CategoryOfArea.area_of_concern,
+            CategoryOfArea.general_area,
+            CategoryOfArea.stay_at_home_area,
+            ])
