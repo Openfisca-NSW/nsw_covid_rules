@@ -35,10 +35,23 @@ class ReasonsForVisitingGeneralArea(Enum):
     to_attend_a_significant_event = 'To attend a significant event, such as a'\
                                     'wedding, or a gathering following a funeral'\
                                     'or memorial service'
+    for_compassionate_reasons = 'For compassionate reasons; including where 2'\
+        'people in a relationship live apart'
     inspect_property = 'To inspect the property ahead of a lease, sale or attend'\
         'an auction of the residence.'
     provide_care_or_assistance = 'To provide care or assistance to a vulnerable person'
     other = 'Other'
+
+
+class pathway_1(Variable):
+    value_type = str
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Pathway 1 UUIDs'
+    reference = "variable-type: output"
+
+    def formula(persons, period, parameters):
+        return '02d19cfd-cf07-46ef-a6f8-f60f90ff23cf, 1d270ce3-b691-463f-99c4-07ee5e87b798'
 
 
 class reasons_for_visiting_general_area(Variable):
@@ -67,9 +80,11 @@ class permitted_for_visiting_general_area(Variable):
                     Reason_for_visiting_general_area == Reason.emergency_or_avoiding_illness,
                     Reason_for_visiting_general_area == Reason.to_attend_a_significant_event,
                     Reason_for_visiting_general_area == Reason.inspect_property,
+                    Reason_for_visiting_general_area == Reason.for_compassionate_reasons,
                     Reason_for_visiting_general_area == Reason.provide_care_or_assistance,
                     Reason_for_visiting_general_area == Reason.other],
                      [True,
+                     True,
                      True,
                      True,
                      True,
