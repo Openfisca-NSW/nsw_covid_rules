@@ -162,7 +162,7 @@ class visiting_for_emergency_or_avoiding_injury(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
-    label = 'Is  person permitted to visit for non-work activities?'
+    label = 'Is  person visiting for emergency or avoiding injury or harm?'
 
     def formula(persons, period, parameters):
         return (persons('visiting_for_emergency', period)

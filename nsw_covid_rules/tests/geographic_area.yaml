@@ -1,5 +1,5 @@
 - name: Person lives in Bayside
-  period: 2021-09-16
+  period: 2021
   input:
     lgaShortName: BAYSIDE
     person_state_of_residence: NSW
