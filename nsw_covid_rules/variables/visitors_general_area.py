@@ -28,19 +28,16 @@ class visitors_permitted(Variable):
 
 class ReasonsForVisitingGeneralArea(Enum):
     to_carry_out_work = 'To carry out work'
-    to_help_with_move = 'To help with moving to or from a place of residence'
-    childcare_or_family = 'For childcare or family contact arrangements'
     emergency_or_avoiding_illness = 'Because of an emergency or to avoid an'\
                                     'injury, illness or risk of harm'
-    to_attend_a_significant_event = 'To attend a significant event, such as a'\
-                                    'wedding, or a gathering following a funeral'\
-                                    'or memorial service'
-    for_compassionate_reasons = 'For compassionate reasons; including where 2'\
-        'people in a relationship live apart'
+    to_help_with_move = 'To help with moving to or from a place of residence'
+    childcare_or_family = 'For childcare or family contact arrangements'
     inspect_property = 'To inspect the property ahead of a lease, sale or attend'\
         'an auction of the residence.'
     provide_care_or_assistance = 'To provide care or assistance to a vulnerable person'
-    other = 'Other'
+    for_compassionate_reasons = 'For compassionate reasons; including where 2'\
+        'people in a relationship live apart'
+    other = 'Social, recreational or other everyday activities'
 
 
 class reasons_for_visiting_general_area(Variable):
@@ -63,11 +60,12 @@ class permitted_for_visiting_general_area(Variable):
     def formula(persons, period, parameters):
         reason_for_visiting_general_area = persons('reasons_for_visiting_general_area', period)
         Reason = reason_for_visiting_general_area.possible_values
+        visitor_is_vaccinated = persons('visitor_is_vaccinated', period)
+        household_vaccinated = persons('household_vaccinated', period)
         return select([reason_for_visiting_general_area == Reason.to_carry_out_work,
                     reason_for_visiting_general_area == Reason.to_help_with_move,
                     reason_for_visiting_general_area == Reason.childcare_or_family,
                     reason_for_visiting_general_area == Reason.emergency_or_avoiding_illness,
-                    reason_for_visiting_general_area == Reason.to_attend_a_significant_event,
                     reason_for_visiting_general_area == Reason.inspect_property,
                     reason_for_visiting_general_area == Reason.for_compassionate_reasons,
                     reason_for_visiting_general_area == Reason.provide_care_or_assistance,
@@ -79,5 +77,4 @@ class permitted_for_visiting_general_area(Variable):
                      True,
                      True,
                      True,
-                     True,
-                     True])
+                     household_vaccinated * visitor_is_vaccinated])

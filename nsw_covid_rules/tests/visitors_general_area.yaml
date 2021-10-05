@@ -1,21 +1,190 @@
 - name: Pathway 1
-  period: 2021-09-29
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: other
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: False
+    visitors_permitted: False
+- name: Pathway 2
+  period: 2021-10-05
   input:
     LGA_category_of_area: general_area
     household_vaccinated: True
     reasons_for_visiting_general_area: other
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: False
+    visitors_permitted: False
+- name: Pathway 3
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: Other
     visitor_is_vaccinated: True
   output:
     permitted_for_visiting_general_area: True
     visitors_permitted: True
-- name: Pathway 2
-  period: 2021-09-29
+- name: Pathway 4A
+  period: 2021-10-05
   input:
     LGA_category_of_area: general_area
     household_vaccinated: True
     reasons_for_visiting_general_area: to_carry_out_work
     visitor_is_vaccinated: True
   output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4A
+  period: 2021-10-05
+  input:
     LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: to_carry_out_work
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4B
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: emergency_or avoiding_illness
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4B
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: emergency_or avoiding_illness
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4C
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: to_help_with_move
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4C
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: to_help_with_move
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4D
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: to_help_with_move
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4D
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: to_help_with_move
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4E
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: childcare_or_family
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4E
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: childcare_or_family
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4F
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: inspect_property
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4F
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: inspect_property
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4G
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: carers_responsibility
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4G
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: carers_responsibility
+    visitor_is_vaccinated: False
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4H
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: True
+    reasons_for_visiting_general_area: compassionate_reasons
+    visitor_is_vaccinated: True
+  output:
+    permitted_for_visiting_general_area: True
+    visitors_permitted: True
+- name: Pathway 4H
+  period: 2021-10-05
+  input:
+    LGA_category_of_area: general_area
+    household_vaccinated: False
+    reasons_for_visiting_general_area: compassionate_reasons
+    visitor_is_vaccinated: False
+  output:
     permitted_for_visiting_general_area: True
     visitors_permitted: True
