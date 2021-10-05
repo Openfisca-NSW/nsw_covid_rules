@@ -25,6 +25,22 @@ class are_visitors_permitted(Variable):
              persons('visitors_permitted_for_general_area', period)])
 
 
+class household_vaccinated(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Are all members of the household over 16 years of age fully vaccinated'\
+            'or have a medical exemption?'
+
+
+class visitor_is_vaccinated(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Is your visitor over 16 years of age, and fully vaccinated or has'\
+            'a medical exemption?'
+
+
 # GENERAL AREA
 class visitors_permitted_for_general_area(Variable):
     value_type = bool
@@ -75,11 +91,10 @@ class worker_permitted_stay_at_home_area(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
-    label = 'For non-prescribed workers, will the number of workers within indoor'\
-            'or outdoor workers in a stay at home area be within the permitted threshold?'
+    label = 'Is worker permitted to visit'
+    reference = "variable-type: output"
 
     def formula(persons, period, parameters):
-        visitor_is_worker = persons('visiting_person_is_worker', period)
         is_prescribed_work = persons('is_prescribed_work', period)
         is_necessary_prescribed_work = persons('is_prescribed_work_necessary', period)
         is_indoor_work = persons('work_conducted_in_indoor_area', period)
@@ -92,13 +107,11 @@ class worker_permitted_stay_at_home_area(Variable):
                                                   * (not(indoor_non_workers_are_present)))
         is_non_necessary_eligible_outdoors_work = (is_outdoor_work
                                                    * (not(exceeds_outdoor_workers_limit)))
-        return (visitor_is_worker
-                * ((is_prescribed_work
-                    * (is_necessary_prescribed_work
-                    + (is_non_necessary_eligible_indoors_work
-                       + is_non_necessary_eligible_outdoors_work))
-                + not_(is_prescribed_work)))
-                )
+        return ((is_prescribed_work
+            * (is_necessary_prescribed_work
+            + is_non_necessary_eligible_indoors_work
+            + is_non_necessary_eligible_outdoors_work)
+            + (not_(is_prescribed_work))))
 
 
 class indoor_workers_exceed_limit_stay_at_home_area(Variable):
@@ -281,10 +294,11 @@ class is_prescribed_work(Variable):
     default_value = False
     entity = Person
     definition_period = ETERNITY
-    label = 'Is the work relating to (a) cleaning, (b) repairs and maintenance'\
-            '(c) alterations and additions to buildings'\
-            '(d) work carried out as part of a trade, including electrical'\
-            'work or plumbing'
+    label = 'Does the work involve any of these prescribed activities?'\
+            'Cleaning, or'\
+            'Repairs and maintenance, or'\
+            'Alterations and additions to buildings, or'\
+            'Carried out as part of a trade, including electrical or plumbing'
 
 
 class is_prescribed_work_necessary(Variable):
@@ -292,7 +306,15 @@ class is_prescribed_work_necessary(Variable):
     default_value = False
     entity = Person
     definition_period = ETERNITY
-    label = 'Is the prescribed work necessary to be carried out?'
+    label = 'Is the work being carried our for any of these necessary reasons?'\
+            'Securing the home, or'\
+            'Safeguarding the health and safety of residents, or'\
+            'Responding to an emergency, or'\
+            'Installing or repairing an essential utility, like electricity'\
+            'or a hot water system, or'\
+            'Cleaning or repairs and maintenance:'\
+            '- necessary for the sale or lease of the home, and'\
+            '- where the home will not be occupied when this work is being carried out'
 
     # def formula(persons, period, parameters):
     #     is_prescribed_work = persons('is_prescribed_work', period)

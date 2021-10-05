@@ -22,7 +22,7 @@ class visitors_permitted(Variable):
              in_stay_at_home_area,
              in_general_area],
             [False,
-             False,
+             persons('permitted_for_visiting_stay_at_home_area', period),
              persons('permitted_for_visiting_general_area', period)])
 
 
@@ -43,17 +43,6 @@ class ReasonsForVisitingGeneralArea(Enum):
     other = 'Other'
 
 
-class pathway_1(Variable):
-    value_type = str
-    entity = Person
-    definition_period = ETERNITY
-    label = 'Pathway 1 UUIDs'
-    reference = "variable-type: output"
-
-    def formula(persons, period, parameters):
-        return '02d19cfd-cf07-46ef-a6f8-f60f90ff23cf, 1d270ce3-b691-463f-99c4-07ee5e87b798'
-
-
 class reasons_for_visiting_general_area(Variable):
     value_type = Enum
     possible_values = ReasonsForVisitingGeneralArea
@@ -72,17 +61,17 @@ class permitted_for_visiting_general_area(Variable):
     reference = "variable-type: output"
 
     def formula(persons, period, parameters):
-        Reason_for_visiting_general_area = persons('reasons_for_visiting_general_area', period)
-        Reason = Reason_for_visiting_general_area.possible_values
-        return select([Reason_for_visiting_general_area == Reason.to_carry_out_work,
-                    Reason_for_visiting_general_area == Reason.to_help_with_move,
-                    Reason_for_visiting_general_area == Reason.childcare_or_family,
-                    Reason_for_visiting_general_area == Reason.emergency_or_avoiding_illness,
-                    Reason_for_visiting_general_area == Reason.to_attend_a_significant_event,
-                    Reason_for_visiting_general_area == Reason.inspect_property,
-                    Reason_for_visiting_general_area == Reason.for_compassionate_reasons,
-                    Reason_for_visiting_general_area == Reason.provide_care_or_assistance,
-                    Reason_for_visiting_general_area == Reason.other],
+        reason_for_visiting_general_area = persons('reasons_for_visiting_general_area', period)
+        Reason = reason_for_visiting_general_area.possible_values
+        return select([reason_for_visiting_general_area == Reason.to_carry_out_work,
+                    reason_for_visiting_general_area == Reason.to_help_with_move,
+                    reason_for_visiting_general_area == Reason.childcare_or_family,
+                    reason_for_visiting_general_area == Reason.emergency_or_avoiding_illness,
+                    reason_for_visiting_general_area == Reason.to_attend_a_significant_event,
+                    reason_for_visiting_general_area == Reason.inspect_property,
+                    reason_for_visiting_general_area == Reason.for_compassionate_reasons,
+                    reason_for_visiting_general_area == Reason.provide_care_or_assistance,
+                    reason_for_visiting_general_area == Reason.other],
                      [True,
                      True,
                      True,
