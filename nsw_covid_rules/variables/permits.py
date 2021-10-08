@@ -78,7 +78,7 @@ class is_eligible_to_be_nominated_person(Variable):
         return (
             persons('onlyPersonNominated', period)
             and not_(persons('nominatedForAnotherPerson', period))
-            and persons('livingWithinFiveKm', period)
+            and persons('living_in_same_area_or_within_distance', period)
             )
 
 
@@ -96,11 +96,21 @@ class nominatedForAnotherPerson(Variable):
     label = 'Individual has not been a nominated visitor for another person'
 
 
-class livingWithinFiveKm(Variable):
+class living_in_same_area_or_within_distance(Variable):
     value_type = bool
     entity = Person
     definition_period = ETERNITY
-    label = 'Nominated individual resides within 5km of the place of residence'
+    label = 'Do all visitors live in the same local government area as you,'\
+            'or within 5 kilometres of all members of the friends bubble?'
+
+
+class visitor_household_vaccinated(Variable):
+    value_type = bool
+    entity = Person
+    definition_period = ETERNITY
+    label = 'Do all visitors live in the same local government area as you,'\
+            'or within 5 kilometres of all members of the friends bubble?'
+    reference = 'variable-type: output'
 
 
 class is_nominated_person(Variable):

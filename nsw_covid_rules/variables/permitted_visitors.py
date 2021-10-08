@@ -31,6 +31,7 @@ class household_vaccinated(Variable):
     definition_period = ETERNITY
     label = 'Are all members of the household over 16 years of age fully vaccinated'\
             'or have a medical exemption?'
+    reference = "variable-type: question"
 
 
 class visitor_is_vaccinated(Variable):
@@ -39,6 +40,7 @@ class visitor_is_vaccinated(Variable):
     definition_period = ETERNITY
     label = 'Is your visitor over 16 years of age, and fully vaccinated or has'\
             'a medical exemption?'
+    reference = "variable-type: question"
 
 
 # GENERAL AREA

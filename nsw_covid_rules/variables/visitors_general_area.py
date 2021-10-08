@@ -27,16 +27,18 @@ class visitors_permitted(Variable):
 
 
 class ReasonsForVisitingGeneralArea(Enum):
-    to_carry_out_work = 'To carry out work'
+    to_carry_out_work = 'to carry out work, including work done by a volunteer'\
+                        'or charitable organisation'
     emergency_or_avoiding_illness = 'Because of an emergency or to avoid an'\
                                     'injury, illness or risk of harm'
-    to_help_with_move = 'To help with moving to or from a place of residence'
+    to_help_with_move = 'to help a person with moving to or from the place of residence'
     childcare_or_family = 'For childcare or family contact arrangements'
-    inspect_property = 'To inspect the property ahead of a lease, sale or attend'\
+    inspect_property = 'To inspect a residence ahead of a lease, sale or attend'\
         'an auction of the residence.'
-    provide_care_or_assistance = 'To provide care or assistance to a vulnerable person'
-    for_compassionate_reasons = 'For compassionate reasons; including where 2'\
-        'people in a relationship live apart'
+    provide_care_or_assistance = 'for carer’s responsibilities, or to provide'\
+        'care or assistance to a vulnerable person'
+    for_compassionate_reasons = 'for compassionate reasons; including where 2'\
+                                'people in a relationship live apart'
     other = 'Social, recreational or other everyday activities'
 
 

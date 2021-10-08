@@ -1,18 +1,9 @@
-- name: Nominated person meets all conditions for permit
-  period: 2021-09-01
-  input:
-    onlyPersonNominated: True
-    nominatedForAnotherPerson: False
-    livingWithinFiveKm: True
-  output:
-    is_eligible_to_be_nominated_person: True
 - name: Nominated person is not eligible to be nominated as a visitor - person
     already has another nominated visitor
   period: 2021-09-01
   input:
     onlyPersonNominated: False
     nominatedForAnotherPerson: False
-    livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: False
 - name: Nominated person is not eligible to be nominated as a visitor - person
@@ -21,7 +12,6 @@
   input:
     onlyPersonNominated: True
     nominatedForAnotherPerson: True
-    livingWithinFiveKm: True
   output:
     is_eligible_to_be_nominated_person: False
 - name: Nominated person is not eligible to be nominated as a visitor - person
@@ -30,7 +20,6 @@
   input:
     onlyPersonNominated: True
     nominatedForAnotherPerson: False
-    livingWithinFiveKm: False
   output:
     is_eligible_to_be_nominated_person: False
 - name: Person does not require a permit to go to work - they are in the area of concern,
