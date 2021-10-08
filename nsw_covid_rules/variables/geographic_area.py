@@ -147,6 +147,9 @@ class LGA_category_of_area(Variable):
             + (lgaShortName == 'KIAMA')
             + (lgaShortName == 'KYOGLE')
             + (lgaShortName == 'LISMORE')
+            + (lgaShortName == 'PARRAMATTA')
+            + (lgaShortName == 'BLACKTOWN')
+            + (lgaShortName == 'SUTHERLAND')
             + (lgaShortName == 'MUSWELLBROOK')
             + (lgaShortName == 'OBERON')))
         return np.select([
