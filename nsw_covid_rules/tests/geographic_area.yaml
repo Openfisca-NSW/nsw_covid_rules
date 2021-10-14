@@ -4,42 +4,42 @@
     lgaShortName: BATHURST REGIONAL
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in BOURKE
   period: 2021-10-05
   input:
     lgaShortName: BOURKE
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in CENTRAL COAST
   period: 2021-10-05
   input:
     lgaShortName: CENTRAL COAST
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in CENTRAL DARLING
   period: 2021-10-05
   input:
     lgaShortName: CENTRAL DARLING
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in EUROBODALLA
   period: 2021-10-05
   input:
     lgaShortName: EUROBODALLA
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in GUNNEDAH
   period: 2021-10-05
   input:
     lgaShortName: GUNNEDAH
     person_state_of_residence: NSW
   output:
-    LGA_category_of_area: stay_at_home_area
+    LGA_category_of_area: general_area
 - name: Person lives in LIVERPOOL
   period: 2021-10-05
   input:

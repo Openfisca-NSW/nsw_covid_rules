@@ -133,31 +133,12 @@ class LGA_category_of_area(Variable):
     label = 'Based on suburb and LGA, which category of area does the person live in?'
 
     def formula(persons, period, parameters):
-        lgaShortName = persons('lgaShortName', period)
         state = persons('person_state_of_residence', period)
         general_area = ((state == 'NSW'))
-        stay_at_home_area = ((state == 'NSW')
-            * ((lgaShortName == 'BATHURST REGIONAL')
-            + (lgaShortName == 'BOURKE')
-            + (lgaShortName == 'CENTRAL COAST')
-            + (lgaShortName == 'CENTRAL DARLING')
-            + (lgaShortName == 'DUBBO REGIONAL')
-            + (lgaShortName == 'EUROBODALLA')
-            + (lgaShortName == 'GUNNEDAH')
-            + (lgaShortName == 'KIAMA')
-            + (lgaShortName == 'KYOGLE')
-            + (lgaShortName == 'LISMORE')
-            + (lgaShortName == 'PARRAMATTA')
-            + (lgaShortName == 'BLACKTOWN')
-            + (lgaShortName == 'SUTHERLAND')
-            + (lgaShortName == 'MUSWELLBROOK')
-            + (lgaShortName == 'OBERON')))
         return np.select([
-                         stay_at_home_area,
-                         general_area,
+                         general_area
                          ],
                          [
-                         CategoryOfArea.stay_at_home_area,
-                         CategoryOfArea.general_area,
+                         CategoryOfArea.general_area
                          ]
                          )
